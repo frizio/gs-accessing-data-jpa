@@ -15,10 +15,12 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class);
+		log.info("***** Applicazione in esecuzione *****");
 	}
 
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
+		log.info("***** ----- ----- *****");
 		return (args) -> {
 			// save a couple of customers
 			repository.save(new Customer("Jack", "Bauer"));
@@ -28,7 +30,7 @@ public class Application {
 			repository.save(new Customer("Michelle", "Dessler"));
 
 			// fetch all customers
-			log.info("Customers found with findAll():");
+			log.info("1. Customers found with findAll():");
 			log.info("-------------------------------");
 			for (Customer customer : repository.findAll()) {
 				log.info(customer.toString());
@@ -38,14 +40,14 @@ public class Application {
 			// fetch an individual customer by ID
 			repository.findById(1L)
 				.ifPresent(customer -> {
-					log.info("Customer found with findById(1L):");
+					log.info("2. Customer found with findById(1L):");
 					log.info("--------------------------------");
 					log.info(customer.toString());
 					log.info("");
 				});
 
 			// fetch customers by last name
-			log.info("Customer found with findByLastName('Bauer'):");
+			log.info("3. Customer found with findByLastName('Bauer'):");
 			log.info("--------------------------------------------");
 			repository.findByLastName("Bauer").forEach(bauer -> {
 				log.info(bauer.toString());
